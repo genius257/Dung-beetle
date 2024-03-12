@@ -16,14 +16,15 @@ program
 
         let script = fs.readFileSync(file, { encoding: 'utf8', flag: 'r' });
 
-        console.log(script);
+        //console.log(script);
 
-        const ast = parser.parse(script);
+        //const ast = parser.parse(script);
 
         // Traverse the tree and replace include statements with included scripts recursively
 
         // Apply the minification, if the flag is present
-        script = options.minify ? Parser.AstToString(ast) : script;
+        const _parser = Parser.parse(script, file);
+        script = options.minify ? _parser.toString() : script;
 
         //output to file
         fs.writeFileSync(
