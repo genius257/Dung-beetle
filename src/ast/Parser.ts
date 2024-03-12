@@ -202,12 +202,6 @@ export default class Parser {
     }
 
     public toString(): string {
-        let script = this.AstToString(this.ast);
-        const includes = this.includes.toSorted((a, b) => b.statement.location.start.offset - a.statement.location.start.offset).forEach((include) => {
-            const includedScript = include.parser.toString();
-            script = script.substring(0, include.statement.location.start.offset) + includedScript + script.substring(include.statement.location.end.offset);
-        });
-
-        return script;
+        return this.AstToString(this.ast);
     }
 }
