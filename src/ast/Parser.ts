@@ -12,8 +12,9 @@ export default class Parser {
     protected functionNameMap: Record<string, string>;
     protected idGenerator: StringIdGenerator;
     protected includes: Array<string> = [];
+    protected parent: Parser|null;
 
-    public constructor(ast: Program, variableNameMap: Record<string, string> = {}, functionNameMap: Record<string, string> = {}, idGenerator:StringIdGenerator|null = null) {
+    public constructor(ast: Program, variableNameMap: Record<string, string> = {}, functionNameMap: Record<string, string> = {}, idGenerator:StringIdGenerator|null = null, parent: Parser|null = null) {
         this.ast = ast;
 
         if (idGenerator === null) {
@@ -31,6 +32,7 @@ export default class Parser {
 
         this.variableNameMap = variableNameMap;
         this.functionNameMap = functionNameMap;
+        this.parent = parent;
     }
 
     public static parse(input: string, grammarSource: string | undefined): Parser {
@@ -103,6 +105,10 @@ export default class Parser {
                 // single line if statement
                 return "If " + this.AstToString(ast.test) + " Then " + this.AstToString(ast.consequent);
             case "IncludeOnceStatement":
+                if (this.parent === null) {
+                    return "";
+                }
+
                 return "#include-once";
             case "IncludeStatement":
                 return this.resolveInclude(ast);
