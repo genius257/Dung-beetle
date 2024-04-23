@@ -142,6 +142,9 @@ export default class Parser {
             case "SingleLineComment":
                 return ""
             case "SwitchCase":
+                if (ast.tests === null) {
+                    return "Case Else\n" + this.AstArrayToStringArray(ast.consequent).join("\n");
+                }
                 return "Case " + this.AstArrayToStringArray(ast.tests).join(",") + "\n" + this.AstArrayToStringArray(ast.consequent).join("\n");
             case "SwitchCaseRange":
                 return this.AstToString(ast.from) + " To " + this.AstToString(ast.to);
