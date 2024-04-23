@@ -79,7 +79,7 @@ export default class Parser {
             case "EmptyStatement":
                 return "";
             case "EnumDeclaration":
-                return (ast.scope === null ? "" : ast.scope + " ") + (ast.constant ? "Const " : "") + "Enum Step " + ast.stepoperator + ast.stepval + this.AstArrayToStringArray(ast.declarations);
+                return (ast.scope === null ? "" : ast.scope + " ") + (ast.constant ? "Const " : "") + "Enum Step " + ast.stepoperator + ast.stepval + " " + this.AstArrayToStringArray(ast.declarations);
             case "ExitLoopStatement":
                 return "ExitLoop " + this.AstToString(ast.level);
             case "ExitStatement":
